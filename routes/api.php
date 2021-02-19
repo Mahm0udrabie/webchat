@@ -1,8 +1,10 @@
 <?php
 
+namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\MessagesController;
+use App\Http\Controllers\UsersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,4 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['middleware' => 'auth:api' ],function () {
+    Route::post('messages/add',[MessagesController::class, 'send']); 
+    Route::get('messages/users/{id}', [MessagesController::class, 'messages']);
 });

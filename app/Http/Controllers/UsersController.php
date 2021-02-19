@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -27,7 +28,9 @@ class UsersController extends Controller
         $user = $this->model->create([
             "name"     => $request->name,
             "email"    => $request->email,
-            "password" => bcrypt($request->password)
+            "password" => bcrypt($request->password),
+            'api_token' => bcrypt(Str::random(20)),
+            'channel'  => $this->create_uuid(),
         ]);
         if($user) {
             return redirect('login');
@@ -42,6 +45,10 @@ class UsersController extends Controller
         return redirect('login') ->withErrors('error email or password');
     }
     public function home() {
-        return view('layout.chat');
+        $users = $this->model->where('id', "!=", auth()-> id())->get();
+        return view('layout.chat', compact(['users']));
+    }
+    private function create_uuid() {
+        return time()."-".Str::random(5)."-".Str::random(5)."-".Str::random(5)."-".Str::random(5);
     }
 }

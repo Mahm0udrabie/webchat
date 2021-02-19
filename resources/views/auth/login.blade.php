@@ -29,7 +29,7 @@
                     <input type="password" class="form-control" placeholder="Enter password" name="password" value="{{ old('password') }}">
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
                 </div>
             </form>
 

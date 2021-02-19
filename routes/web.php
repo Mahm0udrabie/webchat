@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('check_curl', 'App\Http\Controllers\HomeController@getData');
+
 Route::get('login', 'App\Http\Controllers\UsersController@login');
 Route::post('auth', 'App\Http\Controllers\UsersController@auth_user');
 Route::get('register', 'App\Http\Controllers\UsersController@register');
